@@ -2,6 +2,8 @@
 ##Author: Julie P
 
 import tweepy #https://github.com/tweepy/tweepy
+import socket
+from urllib.request import urlopen, URLError
 
 ##Twitter API credentials
 #consumer_key = "Enter API Key"
@@ -14,15 +16,16 @@ def gettweets(userID):
 
     from mediaURLs import getmediaURLs   
    
-    #authorize twitter, initialize tweepy
+    ##authorize twitter, initialize tweepy
     auth = tweepy.OAuthHandler(tweetkey.consumer_key, tweetkey.consumer_secret)
     auth.set_access_token(tweetkey.access_key, tweetkey.access_secret)
     api = tweepy.API(auth)
     
-    try: 
+
+    try:         #Run when the handle is existed 
         user= api.get_user(userID)
 
-                ##initialize a list to hold all the tweepy Tweets
+        ##initialize a list to hold all the tweepy Tweets
         initTweet = []    
     
         ##make initial request for most recent tweets (200 is the maximum allowed count)
@@ -58,8 +61,22 @@ def gettweets(userID):
         tweethandle = input("Not correct Handle. \nEnter again: @")
         gettweets("@"+tweethandle)
     
+
+##Check the availability of Twitter  
+socket.setdefaulttimeout(20)
+url = 'http://twitter.com/'
+
+try:
+    response = urlopen(url)
+except URLError as e:
+    print('We failed to reach a server. Reason:',str(e.code))
+else: 
+    ##Reads the handle and runs the program
+    if __name__ == '__main__':
+        #pass in the username of the account you want to download
+        tweethandle = input("Enter the Username: @")
+        gettweets("@"+tweethandle)
+
+
     
-if __name__ == '__main__':
-    #pass in the username of the account you want to download
-    tweethandle = input("Enter the Username: @")
-    gettweets("@"+tweethandle)
+
