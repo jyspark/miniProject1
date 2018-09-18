@@ -14,7 +14,7 @@ def getmediaURLs(initTweet):
 			file_type = url_media.split('.')[-1]
 			if file_type == 'jpg':
 				initMedia.append(media[0]['media_url'])
-
+		
 	#print(initMedia) 
 	 
 	getimage(initMedia)
