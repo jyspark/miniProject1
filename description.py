@@ -1,13 +1,18 @@
+##2018 Julie Park
 from google.cloud import videointelligence
 import io
 import sys
 
+
 video_client = videointelligence.VideoIntelligenceServiceClient()
 features = [videointelligence.enums.Feature.LABEL_DETECTION]
 
+##Read the video with Google Vision API
 with io.open('/media/sf_Assginment1/EC601/miniProject1/movie.mp4', 'rb') as video:
 	print("Opening Video")
 	input_content = video.read()
+	
+	##API result
 	try: 
 		operation = video_client.annotate_video(features=features, input_content=input_content)
 		print('\nProcessing Video for label Annotations')
@@ -18,6 +23,7 @@ with io.open('/media/sf_Assginment1/EC601/miniProject1/movie.mp4', 'rb') as vide
 		print(e)
 		exit()
 
+##Display analysis
 segment_labels = result.annotation_results[0].segment_label_annotations
 
 for i, segment_label in enumerate(segment_labels):
