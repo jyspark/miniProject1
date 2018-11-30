@@ -53,8 +53,8 @@ def description(ID,imgNum):
 
 	mydb.commit()
 
-	# myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-	# mydb = myclient["mydatabase"]
-	# mycol = mydb["users"]
-	# mydict = { "ID": ID, "ImgNum": imgNum,"Label":label,"Label_Num":num }
-	# x = mycol.insert_one(mydict)
+	myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+	mydb = myclient["mydatabase"]
+	mycol = mydb["users"]
+	mydict = { "ID": ID, "ImgNum": imgNum,"Label":label,"Label_Num":num }
+	x = mycol.insert_one(mydict)
